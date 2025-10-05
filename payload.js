@@ -38,7 +38,7 @@
     });
 
     if (update.ok) {
-      console.log("[POC] Bio actualizada a 'hola' correctamente.");
+      console.log("[POC] Bio actualizada a 'script' correctamente.");
     } else {
       console.log("[POC] Falló la actualización del perfil:", update.status);
     }
